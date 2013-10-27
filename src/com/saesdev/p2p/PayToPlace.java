@@ -14,6 +14,7 @@ public class PayToPlace extends JavaPlugin {
 		this.saveDefaultConfig();
 		setupEconomy();
 		getServer().getPluginManager().registerEvents(new p2pListener(), this);
+		getCommand("p2p").setExecutor(new p2pCmd());
 	}
 	
 	private boolean setupEconomy() {
