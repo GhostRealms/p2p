@@ -1,0 +1,6 @@
+name: p2p
+main: com.saesdev.p2p.PayToPlace
+version: 0.0.1-a
+author: Rmarmorstein
+authors: [SaesDev, Pluto1099, hkminegod]
+depend: [Vault]
