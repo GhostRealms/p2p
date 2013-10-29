@@ -1,5 +1,6 @@
 package com.saesdev.p2p;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,7 @@ public class p2pCmd implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length == 0) {
-			sendInfoMessage();
+			sendInfoMessage(sender);
 		} else if(args.length == 1) {
 			if(args[0].equalsIgnoreCase("help")) {
 				sendHelpMessage();
@@ -20,6 +21,12 @@ public class p2pCmd implements CommandExecutor {
 			}
 		}
 		return false;
+	}
+
+	private void sendInfoMessage(CommandSender sender) {
+		sender.sendMessage(ChatColor.GRAY + "[p2p] PayToPlace - SaesDevelopment");
+		sender.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.WHITE + "Rmarmorstein, Pluto1099, hkminenub");
+		
 	}
 
 }
