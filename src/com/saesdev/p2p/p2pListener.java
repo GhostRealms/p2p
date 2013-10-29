@@ -3,7 +3,9 @@ package com.saesdev.p2p;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -17,13 +19,38 @@ public class p2pListener implements Listener {
 	
 	@EventHandler (priority = EventPriority.HIGH)
 	public void onBlockPlace(BlockPlaceEvent e) {
-		if(config.contains("items." + e.getBlock().getTypeId())) {
-			int price = config.getInt("items." + e.getBlock().getTypeId() + ".price");
-			if(econ.has(e.getPlayer().getName(), price)) {
-				econ.withdrawPlayer(e.getPlayer().getName(), price);
-				e.getPlayer().sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.WHITE + "You Were Charged " + ChatColor.GREEN + price  + ChatColor.WHITE + " For placing " + e.getBlock().toString());
+		if(shouldCharge(e.getPlayer())) {
+			if(hasTax(e.getBlock())) {
+				Player p = e.getPlayer();
+				p.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.WHITE + "You have been Charged a Tax of " + ChatColor.GREEN + getTax(e.getBlock()));
 			}
 		}
+	}
+	
+	public boolean shouldCharge(Player p) {
+		if(p.hasPermission("p2p.exempt")) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public boolean hasTax(Block b) {
+		@SuppressWarnings("deprecation")
+		int id = b.getTypeId();
+		String s = Integer.toString(id);
+		if(config.contains(s)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public double getTax(Block b) {
+		@SuppressWarnings("deprecation")
+		String id = Integer.toString(b.getTypeId());
+		int tax = config.getInt(Integer.toString(config.getInt(id)));
+		return tax;
 	}
 
 }

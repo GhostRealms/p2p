@@ -4,3 +4,6 @@ version: 0.0.1-a
 author: Rmarmorstein
 authors: [SaesDev, Pluto1099, hkminegod]
 depend: [Vault]
+commands:
+  p2p:
+    description: PayToPlace base Command

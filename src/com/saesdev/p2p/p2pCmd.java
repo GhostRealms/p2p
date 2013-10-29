@@ -15,16 +15,23 @@ public class p2pCmd implements CommandExecutor {
 			sendInfoMessage(sender);
 		} else if(args.length == 1) {
 			if(args[0].equalsIgnoreCase("help")) {
-				sendHelpMessage();
+				sendHelpMessage(sender);
 			} else if(args[0].equalsIgnoreCase("reload")) {
-				plugin.reloadConfig();
+				if(sender.hasPermission("p2p.reload")) {
+					plugin.reloadConfig();
+				}
 			}
 		}
 		return false;
 	}
 
+	private void sendHelpMessage(CommandSender sender) {
+		sender.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.YELLOW + "Help & Commands!");
+		sender.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.WHITE + "/p2p reload :: Reload The Configuration");
+	}
+
 	private void sendInfoMessage(CommandSender sender) {
-		sender.sendMessage(ChatColor.GRAY + "[p2p] PayToPlace - SaesDevelopment");
+		sender.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.YELLOW + "PayToPlace - SaesDevelopment");
 		sender.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.WHITE + "Rmarmorstein, Pluto1099, hkminenub");
 		
 	}
