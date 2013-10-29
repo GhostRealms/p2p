@@ -22,7 +22,13 @@ public class p2pListener implements Listener {
 		if(shouldCharge(e.getPlayer())) {
 			if(hasTax(e.getBlock())) {
 				Player p = e.getPlayer();
-				p.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.WHITE + "You have been Charged a Tax of " + ChatColor.GREEN + getTax(e.getBlock()));
+				if(econ.has(e.getPlayer().getName(), getTax(e.getBlock()))) {
+					econ.withdrawPlayer(e.getPlayer().getName(),getTax(e.getBlock()));
+					p.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.WHITE + "You have been Charged a Tax of " + ChatColor.GREEN + getTax(e.getBlock()));
+				} else {
+					p.sendMessage(ChatColor.GRAY + "[p2p] " + ChatColor.RED + "You do not have sufficient funds for placement!");
+					e.setCancelled(true);
+				}
 			}
 		}
 	}
